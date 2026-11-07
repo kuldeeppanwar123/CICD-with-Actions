@@ -5,10 +5,14 @@ on:
         branches:
             - main
             - develop
+    pull_request:
+        branches:
+            - main
     workflow_dispatch:
 
 jobs:
     on-push:
+        if: github.event_name == 'push'
         runs-on: ubuntu-latest
         steps:
           - name: Running on main push
@@ -18,3 +22,22 @@ jobs:
           - name: Running on develop push
             if: github.ref == 'refs/heads/develop'
             run: echo "Running on develop push"
+
+    on-pull-request:
+        if: github.event_name == 'pull_request'
+        runs-on: ubuntu-latest
+        steps:
+          - name: Running on pull request to main
+            if: github.event.pull_request.base.ref == 'refs/heads/main'
+            run: echo "Running on pull request to main"
+
+          - name: Running on pull request to develop
+            if: github.event.pull_request.base.ref == 'refs/heads/develop'
+            run: echo "Running on pull request to develop"
+
+    on-workflow-dispatch:
+        if: github.event_name == 'workflow_dispatch'
+        runs-on: ubuntu-latest
+        steps:
+          - name: Running on workflow dispatch
+            run: echo "Running on workflow dispatch"
