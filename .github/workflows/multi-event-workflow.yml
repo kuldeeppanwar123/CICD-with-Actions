@@ -23,17 +23,31 @@ jobs:
             if: github.ref == 'refs/heads/develop'
             run: echo "Running on develop push"
 
-    on-pull-request:
-        if: github.event_name == 'pull_request'
+    on-pull-request-opened:
+        if: github.event_name == 'pull_request' && github.event.action == 'opened'
         runs-on: ubuntu-latest
         steps:
           - name: Running on pull request to main
-            if: github.event.pull_request.base.ref == 'refs/heads/main'
+            if: github.event.pull_request.base.ref == 'main'        
             run: echo "Running on pull request to main"
 
           - name: Running on pull request to develop
-            if: github.event.pull_request.base.ref == 'refs/heads/develop'
+            if: github.event.pull_request.base.ref == 'develop'
             run: echo "Running on pull request to develop"
+
+    on-pull-request-closed:
+        if: github.event_name == 'pull_request' && github.event.action == 'closed'
+        runs-on: ubuntu-latest
+        steps:
+          - name: Running on pull request closed
+            run: echo "Running on pull request closed"
+
+    on-pull-request-merged:
+        if: github.event_name == 'pull_request' && github.event.action == 'closed' && github.event.pull_request.merged == true
+        runs-on: ubuntu-latest
+        steps:
+          - name: Running on pull request merged
+            run: echo "Running on pull request merged"
 
     on-workflow-dispatch:
         if: github.event_name == 'workflow_dispatch'
