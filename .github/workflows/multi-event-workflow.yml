@@ -1,0 +1,20 @@
+name: Multi-Event Workflow
+
+on:
+    push:
+        branches:
+            - main
+            - develop
+    workflow_dispatch:
+
+jobs:
+    on-push:
+        runs-on: ubuntu-latest
+        steps:
+          - name: Running on main push
+            if: github.ref == 'refs/heads/main'
+            run: echo "Running on main push"
+
+          - name: Running on develop push
+            if: github.ref == 'refs/heads/develop'
+            run: echo "Running on develop push"
