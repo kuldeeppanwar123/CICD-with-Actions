@@ -28,11 +28,11 @@ jobs:
         runs-on: ubuntu-latest
         steps:
           - name: Running on pull request to main
-            if: github.event.pull_request.base.ref == 'refs/heads/main'
+            if: github.event.pull_request.base.ref == 'main'        
             run: echo "Running on pull request to main"
 
           - name: Running on pull request to develop
-            if: github.event.pull_request.base.ref == 'refs/heads/develop'
+            if: github.event.pull_request.base.ref == 'develop'
             run: echo "Running on pull request to develop"
 
     on-workflow-dispatch:
