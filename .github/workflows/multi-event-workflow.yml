@@ -8,8 +8,15 @@ on:
     pull_request:
         branches:
             - main
+        types:
+            - opened
+            - closed
+            
     workflow_dispatch:
 
+    schedule:
+        - cron: '0 0 * * *'   
+          timezone: IST
 jobs:
     on-push:
         if: github.event_name == 'push'
@@ -55,3 +62,11 @@ jobs:
         steps:
           - name: Running on workflow dispatch
             run: echo "Running on workflow dispatch"
+
+    on-workflow-schedule:
+        if: github.event_name == 'schedule'
+        runs-on: ubuntu-latest
+        steps:
+          - name: Running on workflow schedule
+            run: echo "Running on workflow schedule"
+
